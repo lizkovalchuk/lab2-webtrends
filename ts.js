@@ -31,18 +31,47 @@ var months;
     months[months["November"] = 10] = "November";
     months[months["December"] = 11] = "December";
 })(months || (months = {}));
-var earthPhysics;
-(function (earthPhysics) {
-    earthPhysics[earthPhysics["gravity"] = 9.81] = "gravity";
-    earthPhysics[earthPhysics["c"] = Math.pow(3.88, 8)] = "c";
-    earthPhysics[earthPhysics["weight"] = 1] = "weight";
-})(earthPhysics || (earthPhysics = {}));
-console.log(days[0]);
-//html elements
+//grab html elements
 var pTodayDate = document.getElementById("p--today-date");
 //today as a date
 var today = new Date();
-console.log(today.getMonth());
 //backticks are the starting and ending of strings.
 //the $ and curly braces acts as concaticating
 pTodayDate.innerHTML = "Today is " + days[today.getDay()] + "  " + months[today.getMonth()] + " " + today.getDate() + ", " + today.getFullYear();
+// part 2
+// the user is to input thier birthday in the date picker.
+// when the user clicks the "That's my birthday" button
+// display in the <p> below the button day when their birthday
+// will take place. 
+// html elements
+//let pTodayDate = document.getElementById("p--today-date");
+var buttonBirthday = document.getElementById("button--birthday");
+var pBirthdayMessage = document.getElementById("p--birthday-message");
+var inputDatePicker = document.getElementById("input--date-picker");
+buttonBirthday.onclick = function () {
+    //  get birthday from tag
+    var userBDay = inputDatePicker.value;
+    var userBdate = new Date(userBDay);
+    console.log(userBDay);
+    console.log(userBdate);
+    pBirthdayMessage.innerHTML = makeDateString(userBdate);
+};
+function makeDateString(inputDate) {
+    // if today is user's birthday
+    // console.log(inputDate);
+    console.log(inputDate.getDate());
+    console.log(inputDate.getMonth());
+    console.log(today.getDate());
+    console.log(today.getMonth());
+    if ((inputDate.getDate() + 1 === today.getDate())
+        &&
+            (inputDate.getMonth() === today.getMonth())) {
+        return "Happy Birthday!";
+    }
+    // today is not their birthday
+    var thisYearsBirthday = new Date();
+    thisYearsBirthday.setDate(inputDate.getDate());
+    thisYearsBirthday.setFullYear(today.getFullYear());
+    thisYearsBirthday.setMonth(inputDate.getMonth());
+    return "Your birthday is " + days[thisYearsBirthday.getDay()] + " " + months[inputDate.getMonth()] + " " + inputDate.getDate() + ", " + today.getFullYear();
+}
